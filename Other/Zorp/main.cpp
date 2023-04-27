@@ -1,5 +1,7 @@
 #include <iostream>
 #include <Windows.h>
+#include <random>
+#include <time.h>
 
 const char* ESC = "\x1b";
 const char* CSI = "\x1b[";
@@ -14,6 +16,33 @@ const char* RESTORE_CURSOR_POS = "\x1b[u";
 
 int main()
 {
+	const int EMPTY = 0;
+	const int ENEMY = 1;
+	const int TREASURE = 2;
+	const int FOOD = 3;
+	const int ENTRANCE = 4;
+	const int EXIT = 5;
+	const int MAX_RANDOM_TYPE = FOOD + 1;
+
+	const int MAZE_WIDTH = 10;
+	const int MAZE_HEIGHT = 6;
+
+	// Create a 2D array
+	int rooms[MAZE_HEIGHT][MAZE_WIDTH];
+
+	srand(time(nullptr));
+
+	for (int y = 0; y < MAZE_HEIGHT; y++)
+	{
+		for (int x = 0; x < MAZE_WIDTH; x++)
+		{
+			rooms[y][x] = rand() % MAX_RANDOM_TYPE;
+		}
+	}
+
+	rooms[0][0] = ENTRANCE;
+	rooms[MAZE_HEIGHT - 1][MAZE_WIDTH - 1] = EXIT;
+
 	// Set output mode to handle virtual terminal sequences
 	DWORD dwMode = 0;
 	HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -33,6 +62,23 @@ int main()
 	std::cout << INDENT << "First, some questions..." << std::endl;
 
 	std::cout << SAVE_CURSOR_POS;
+
+	//output the map
+	std::cout << std::endl;
+	std::cout << std::endl;
+	std::cout << std::endl;
+	std::cout << std::endl;
+	for (int y = 0; y < MAZE_HEIGHT; y++)
+	{
+		std::cout << INDENT;
+		for (int x = 0; x < MAZE_WIDTH; x++)
+		{
+			std::cout << "[ " << rooms[y][x] << " ]";
+		}
+		std::cout << std::endl;
+	}
+
+	std::cout << RESTORE_CURSOR_POS;
 	std::cout << INDENT << "How tall are you, in centimeters? " << INDENT << YELLOW;
 
 	std::cin >> height;
@@ -56,8 +102,15 @@ int main()
 
 	// Move the cursor to the start of the first question
 	std::cout << RESTORE_CURSOR_POS;
-	// Delete the next 4 lines of text
-	std::cout << CSI << "4M";
+	// Delete the next 3 lines of text
+	std::cout << CSI << "3M";
+	// insert 3 lines (so map stays in the same place)
+	std::cout << CSI << "3L";
+
+	// Clears any error flags from the buffer
+	std::cin.clear();
+	// Clears all characters currently in the buffer
+	std::cin.ignore(std::cin.rdbuf()->in_avail());
 
 	std::cout << INDENT << "What is the first letter of your name? " << INDENT << YELLOW;
 
@@ -84,6 +137,7 @@ int main()
 	std::cout << RESTORE_CURSOR_POS;
 	std::cout << CSI << "A"; // cursor up 1 line
 	std::cout << CSI << "4M"; // delete the next 4 lines of text
+	std::cout << CSI << "4L"; // insert the next 4 lines of text
 
 	if (firstLetterOfName != 0)
 	{
