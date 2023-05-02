@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{b69cbc28-725a-4a9e-91a6-2fd201f1bd28}</ProjectGuid>
-    <RootNamespace>Zorp</RootNamespace>
+    <ProjectGuid>{ad5130f7-b061-473f-97b4-825777856789}</ProjectGuid>
+    <RootNamespace>AIE07Calculator</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -127,17 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Room.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GameDefines.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="Point2D.h" />
-    <ClInclude Include="Room.h" />
+    <ClCompile Include="AIE07_Calculator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

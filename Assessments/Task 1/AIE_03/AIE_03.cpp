@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-int* BinarySearch(const int* _arr, int _count, int _searchVal);
+const int* BinarySearch(const int* _arr, int _count, int _searchVal);
 void TestResult(const int* _result, int* const _expected);
 
 int main()
@@ -35,7 +35,7 @@ void TestResult(const int* _result, int* const _expected)
 		(_expected == nullptr ? "nullptr" : std::to_string(*_expected).c_str()) << ")" << std::endl;
 }
 
-int* BinarySearch(const int* _arr, int _count, int _searchVal)
+const int* BinarySearch(const int* _arr, int _count, int _searchVal)
 {
 	// TODO: Implement a binary search
 	// the array is assumed to be sorted
