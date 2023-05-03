@@ -22,16 +22,51 @@ void Application::Run()
 
 bool Application::CheckWinner(char _board[BOARD_DIMENSIONS][BOARD_DIMENSIONS], char _token)
 {
-	// row
+	// count the number of tokens in each row
+	for (int rowId = 0; rowId < 3; rowId++)
+	{
+		int count = 0;
+		for (int colId = 0; colId < 3; colId++)
+			if (_board[rowId][colId] == _token)
+				count += 1;
 
+		// there are 3 in a row, return true indicating a win
+		if (count == 3) return true;
+	}
 
-	// column
+	// count the number of tokens in each column
+	for (int colId = 0; colId < 3; colId++)
+	{
+		int count = 0;
+		for (int rowId = 0; rowId < 3; rowId++)
+			if (_board[rowId][colId] == _token)
+				count += 1;
 
+		// there are 3 in a row, return true indicating a win
+		if (count == 3) return true;
+	}
 
-	// top-right to bottom-left
+	// check the number of tokens diagionally (topright to bottom left)
+	int count = 0;
+	for (int id = 0; id < 3; id++)
+	{
+		if (_board[id][2 - id] == _token)
+			count++;
 
+		// there are 3 in a row, return true indicating a win
+		if (count == 3) return true;
+	}
 
-	// top-left to bottom-right
+	// check the number of tokens diagionally (topright to bottom left)
+	count = 0;
+	for (int id = 0; id < 3; id++)
+	{
+		if (_board[id][id] == _token)
+			count++;
+
+		// there are 3 in a row, return true indicating a win
+		if (count == 3) return true;
+	}
 
 	// if we get here, than we have not found a win condition for the given token
 	// then return false indicating no win
