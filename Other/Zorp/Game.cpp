@@ -5,9 +5,9 @@
 #include <time.h>
 
 
-Game::Game()
+Game::Game() : m_gameOver(false)
 {
-	m_gameOver = false;
+	
 }
 
 Game::~Game()
@@ -45,7 +45,7 @@ void Game::Update()
 	
 	int command = GetCommand();
 
-	if (m_player.ExecuteCommand(command))
+	if (m_player.ExecuteCommand(command, m_map[playerPos.y][playerPos.x].GetType()))
 		return;
 		
 	m_map[playerPos.y][playerPos.x].ExecuteCommand(command);
@@ -103,7 +103,12 @@ void Game::InitializeMap()
 			int type = rand() % (MAX_RANDOM_TYPE * 2);
 
 			if (type < MAX_RANDOM_TYPE)
+			{
+				if (type == TREASURE)
+					type = rand() % 3 + TREASURE_HP;
+
 				m_map[y][x].SetType(type);
+			}
 			else
 				m_map[y][x].SetType(EMPTY);
 
@@ -164,6 +169,8 @@ int Game::GetCommand()
 
 	// clear any existing text
 	std::cout << CSI << "4M";
+	// insert 4 blank lines to ensure the inventory output remains correct
+	std::cout << CSI << "4L";
 
 	std::cout << INDENT << "Enter a command.";
 
@@ -178,6 +185,7 @@ int Game::GetCommand()
 	std::cout << RESET_COLOR;
 
 	bool bMove = false;
+	bool bPickup = false;
 	while (input) 
 	{
 		if (strcmp(input, "move") == 0) 
@@ -204,6 +212,16 @@ int Game::GetCommand()
 		if (strcmp(input, "fight") == 0) 
 		{
 			return FIGHT;
+		}
+
+		if (strcmp(input, "pick") == 0)
+		{
+			bPickup = true;
+		}
+		else if (bPickup)
+		{
+			if (strcmp(input, "up") == 0)
+				return PICKUP;
 		}
 
 		char next = std::cin.peek();
