@@ -54,12 +54,12 @@ void Game::Update()
 void Game::Draw()
 {
 	Point2D playerPos = m_player.GetPosition();
-	
-	// list the directions the player can take
-	DrawValidDirections();
 
 	// draw the description of the current room
 	m_map[playerPos.y][playerPos.x].DrawDescription();
+	
+	// list the directions the player can take
+	DrawValidDirections();
 	
 	// redraw the map
 	DrawMap();
