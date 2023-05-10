@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "GameObject.h"
 
 GameObject::GameObject()
 	: color(RED), position({ 400, 300 })
