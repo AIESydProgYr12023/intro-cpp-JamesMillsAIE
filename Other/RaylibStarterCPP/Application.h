@@ -3,16 +3,19 @@
 class Application
 {
 public:
-	Application(int _width, int _height, const char* _title);
+	Application();
 
-	void Run();
+	void Run(char* _argv[]);
 	void Draw();
 	void Update(float _dt);
 
+	const char* GetApplicationDir() const;
+
 private:
-	int m_width;
-	int m_height;
-	const char* m_title;
+	void BuildApplicationDir(char* _argv[]);
+
+private:
+	char* m_applicationDir;
 
 };
 

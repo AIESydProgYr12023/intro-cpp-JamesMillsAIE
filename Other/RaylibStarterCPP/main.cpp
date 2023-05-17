@@ -1,9 +1,18 @@
 #include "Application.h"
 
-int main()
+#include <iostream>
+
+int main(int _argc, char* _argv[])
 {
-    Application app = Application(800, 600, "Raylib Starter");
-    app.Run();
+    std::cout << _argc << std::endl;
+
+    for (int i = 0; i < _argc; i++)
+    {
+        std::cout << _argv[i] << std::endl;
+    }
+
+    Application app = Application();
+    app.Run(_argv);
 
     return 0;
 }
